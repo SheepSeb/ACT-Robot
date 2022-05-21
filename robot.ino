@@ -1,15 +1,56 @@
 #include <Servo.h>
-Servo s1;
-Servo s2;
-Servo s3;
+struct Leg
+{
+  /* data */
+  Servo high;
+  Servo low;
+  Servo mid;
+};
+
+Leg legL1,legL2;
+Leg legR1,legR2;
+
 String readSerial;
-int value_servo;
-String name_servo;
+
 void setup() {
   // put your setup code here, to run once:
-  s1.attach(3);
-  s3.attach(5);
-  s2.attach(6);
+
+  // LEG LEFT 1 ATTACHMENT
+  legL1.low.attach(3);
+  legL1.mid.attach(4);
+  legL1.high.attach(5);
+
+  legL1.low.write(45);
+  legL1.mid.write(45);
+  legL1.high.write(45);
+
+  // LEG LEFT 2 ATTACHMENT
+  legL2.mid.attach(6);
+  legL2.low.attach(7);
+  legL2.high.attach(8);
+
+  legL2.low.write(45);
+  legL2.mid.write(45);
+  legL2.high.write(45);
+
+  // LEG Right 1 ATTACHMENT
+  legR1.low.attach(9);
+  legR1.mid.attach(10);
+  legR1.high.attach(11);
+
+  legR1.low.write(45);
+  legR1.mid.write(45);
+  legR1.high.write(45);
+
+  // LEG Right 2 ATTACHMENT
+  legR2.low.attach(12);
+  legR2.mid.attach(13);
+  legR2.high.attach(14);
+
+  legR2.low.write(45);
+  legR2.mid.write(45);
+  legR2.high.write(45);
+
   Serial.begin(115200);
 }
 
