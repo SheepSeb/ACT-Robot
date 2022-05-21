@@ -7,12 +7,20 @@ struct Leg
   Servo mid;
 };
 
-Leg legL1,legL2;
-Leg legR1,legR2;
+Leg legL1, legL2;
+Leg legR1, legR2;
 
 String readSerial;
 
-void setup() {
+void move_forword(Leg leg, int grades[])
+{
+  leg.low.write(grades[0]);
+  leg.mid.write(grades[1]);
+  leg.high.write(grades[2]);
+}
+
+void setup()
+{
   // put your setup code here, to run once:
 
   // LEG LEFT 1 ATTACHMENT
@@ -54,32 +62,52 @@ void setup() {
   Serial.begin(115200);
 }
 
-void loop() {
-  // put your main code here, to run repeatedly:
-  // start at 45
-//  s1.write(45);
-//  s3.write(90);
-  if(Serial.available() > 0){
-    readSerial = Serial.readString();
+void loop()
+{
+  //  put your main code here, to run repeatedly:
+  //  start at 45
+  //  s1.write(45);
+  //  s3.write(90);
+  int grades[3] = {0};
+  if (Serial.available() > 0)
+  {
+    readSerial = Serial.readString(); // send data only when you receive data:
     Serial.println(readSerial);
-    readSerial.trim();
+    readSerial.trim(); // taie enter-ul
     int index = readSerial.lastIndexOf(',');
     int length = readSerial.length();
-    name_servo = readSerial.substring(0,index);
-    String s_val = readSerial.substring(index,length);
+    name_servo = readSerial.substring(0, index);
+    String s_val = readSerial.substring(index, length);
     int index2 = s_val.lastIndexOf(',');
-    s_val = s_val.substring(index-1,s_val.length());
+    s_val = s_val.substring(index - 1, s_val.length());
     value_servo = s_val.toInt();
     Serial.println(s_val);
-    if(name_servo.equals("s1")){
-      Serial.println("Servo 1");
-      s1.write(value_servo);
-      Serial.println(value_servo);
-    }
-    if(name_servo.equals("s2")){
+
+    switch (name_servo)
+    {
+    case "F":
+      move_forward(legL1.low, 45);
+      //        Serial.println("Servo 1");
+      //        s1.write(value_servo);
+      //        Serial.println(value_servo);
+      break;
+
+    case "s2":
       Serial.println("Servo 2");
       s3.write(value_servo);
       Serial.println(value_servo);
+      break;
     }
+
+    //    if(name_servo.equals("s1")){ //switch
+    //      Serial.println("Servo 1");
+    //      s1.write(value_servo);
+    //      Serial.println(value_servo);
+    //    }
+    //    if(name_servo.equals("s2")){
+    //      Serial.println("Servo 2");
+    //      s3.write(value_servo);
+    //      Serial.println(value_servo);
+    //    }
   }
 }
